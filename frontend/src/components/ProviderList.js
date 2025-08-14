@@ -18,7 +18,7 @@ function ProviderList() {
             setLoading(true);
             try {
                 const searchTerm = searchParams.get('search');
-                let apiUrl = 'http://127.0.0.1:8000/api/providers/public-profiles/';
+                let apiUrl = 'https://servify-backend.onrender.com/api/providers/public-profiles/';
 
                 if (searchTerm) {
                     apiUrl += `?search=${searchTerm}`;

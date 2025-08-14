@@ -20,7 +20,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://127.0.0.1:8000/api/users/register/', formData);
+            await axios.post('https://servify-backend.onrender.com/api/users/register/', formData);
             alert('Registration successful! Please log in.');
             navigate('/login');
         } catch (error) {

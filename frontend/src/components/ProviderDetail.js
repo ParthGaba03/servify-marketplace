@@ -24,10 +24,10 @@ function ProviderDetail() {
             setLoading(true);
             try {
                 // Public data is fetched with standard axios
-                const providerResponse = await axios.get(`http://127.0.0.1:8000/api/providers/public-profiles/${id}/`);
+                const providerResponse = await axios.get(`https://servify-backend.onrender.com/api/providers/public-profiles/${id}/`);
                 setProvider(providerResponse.data);
 
-                const reviewResponse = await axios.get(`http://127.0.0.1:8000/api/reviews/provider/${id}/`);
+                const reviewResponse = await axios.get(`https://servify-backend.onrender.com/api/reviews/provider/${id}/`);
                 setReviews(reviewResponse.data);
             } catch (error) {
                 console.error('Error fetching public data:', error);

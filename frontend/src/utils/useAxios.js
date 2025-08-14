@@ -4,7 +4,7 @@ import AuthContext from '../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import dayjs from 'dayjs';
 
-const baseURL = 'http://127.0.0.1:8000/api';
+const baseURL = 'https://servify-backend.onrender.com/api';
 
 const useAxios = () => {
     const { authTokens, setAuthTokens, logoutUser } = useContext(AuthContext);

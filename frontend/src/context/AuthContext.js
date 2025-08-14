@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUserDetails = useCallback(async (accessToken) => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/users/me/', {
+            const response = await axios.get('https://servify-backend.onrender.com/api/users/me/', {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
             setUser(response.data);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (username, password) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/users/token/', { username, password });
+            const response = await axios.post('https://servify-backend.onrender.com/api/users/token/', { username, password });
             const data = response.data;
             setAuthTokens(data);
             setUser(jwtDecode(data.access));
