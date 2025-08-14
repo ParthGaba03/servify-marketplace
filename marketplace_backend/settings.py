@@ -66,7 +66,7 @@ ROOT_URLCONF = 'marketplace_backend.urls'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "servify-marketplace.vercel.app",
+    "https://servify-marketplace.vercel.app",
 ]
 
 TEMPLATES = [
