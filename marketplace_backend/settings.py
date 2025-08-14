@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import dj_database_url
 import os
 from pathlib import Path
 
@@ -92,16 +93,24 @@ WSGI_APPLICATION = 'marketplace_backend.wsgi.application'
 
 # settings.py
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'marketplace_db',          
-        'USER': 'market_user',              
-        'PASSWORD': 'Django_p@ss123', 
-        'HOST': 'localhost',                
-        'PORT': '5432',                    
+# settings.py
+
+# This is the new, smart database configuration
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'marketplace_db',
+            'USER': 'market_user',
+            'PASSWORD': 'your_secure_password', # Make sure this is your local password
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
