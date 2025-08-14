@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-@)a=@@k5of&#=^bex(8r$7e4i-0*k3s^x3aje##muidk1$fv#y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['servify-backend.onrender.com']
 
 
 # Application definition
@@ -66,6 +66,7 @@ ROOT_URLCONF = 'marketplace_backend.urls'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "servify-marketplace.vercel.app",
 ]
 
 TEMPLATES = [
