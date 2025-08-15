@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'servify_main_db',
         'USER': 'market_user',
-        'PASSWORD': 'your_local_db_password', # Make sure this is your correct local password
+        'PASSWORD': 'testing123', # Make sure this is your correct local password
         'HOST': 'localhost',
         'PORT': '5432',
     }
