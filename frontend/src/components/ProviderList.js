@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
-// MUI Imports
-import { Card, CardContent, CardActions, Typography, Button, CircularProgress, Box } from '@mui/material';
+// MUI Imports - Added Rating
+import { Grid, Card, CardContent, CardActions, Typography, Button, CircularProgress, Box, Rating } from '@mui/material';
 
 // Import our Map component
 import ProviderMap from './ProviderMap';
@@ -18,6 +18,7 @@ function ProviderList() {
             setLoading(true);
             try {
                 const searchTerm = searchParams.get('search');
+                // Using your live backend URL
                 let apiUrl = 'https://servify-backend.onrender.com/api/providers/public-profiles/';
 
                 if (searchTerm) {
@@ -51,16 +52,23 @@ function ProviderList() {
                 Our Service Providers
             </Typography>
             
-            {/* Using a simple Flexbox layout */}
             <Box sx={{ display: 'flex', height: 'calc(100vh - 150px)', gap: 2 }}>
                 
-                {/* Left Column: Provider Cards */}
                 <Box sx={{ width: '50%', overflowY: 'auto', pr: 1 }}>
                     {providers.length > 0 ? (
                         providers.map(provider => (
                             <Card key={provider.id} sx={{ mb: 2 }}>
                                 <CardContent>
                                     <Typography variant="h5">{provider.username}</Typography>
+                                    
+                                    {/* --- THIS IS THE NEW RATING SECTION --- */}
+                                    <Box sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
+                                        <Rating value={provider.average_rating || 0} readOnly precision={0.5} size="small" />
+                                        <Typography sx={{ ml: 1, fontSize: '0.9rem' }}>
+                                            ({provider.review_count || 0})
+                                        </Typography>
+                                    </Box>
+
                                     <Typography color="text.secondary">{provider.city}</Typography>
                                 </CardContent>
                                 <CardActions>
@@ -75,7 +83,6 @@ function ProviderList() {
                     )}
                 </Box>
 
-                {/* Right Column: Map */}
                 <Box sx={{ width: '50%', height: '100%', display: { xs: 'none', md: 'block' } }}>
                     <ProviderMap providers={providers} />
                 </Box>

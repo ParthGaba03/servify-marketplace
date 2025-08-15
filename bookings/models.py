@@ -15,3 +15,5 @@ class Booking(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
 
     created_at = models.DateTimeField(auto_now_add=True, null=True) 
+
+    address = models.TextField(blank=True, null=True)

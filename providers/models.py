@@ -13,5 +13,9 @@ class ProviderProfile(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
+    average_rating = models.FloatField(default=0.0)
+    review_count = models.IntegerField(default=0)
+
+
     def __str__(self):
         return f"{self.user.username}'s Profile"

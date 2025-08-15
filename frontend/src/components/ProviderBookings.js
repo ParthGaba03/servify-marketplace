@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'; // 1. Import useCallback
+import React, { useState, useEffect, useCallback } from 'react';
 import useAxios from '../utils/useAxios';
 import { Box, Typography, List, ListItem, ListItemText, CircularProgress, Paper, Select, MenuItem, FormControl } from '@mui/material';
 import { format } from 'date-fns';
@@ -8,7 +8,6 @@ function ProviderBookings() {
     const [loading, setLoading] = useState(true);
     const api = useAxios();
 
-    // 2. Wrap the fetch function in useCallback
     const fetchProviderBookings = useCallback(async () => {
         try {
             const response = await api.get('/bookings/provider/bookings/');
@@ -18,16 +17,15 @@ function ProviderBookings() {
         } finally {
             setLoading(false);
         }
-    }, [api]); // The dependency for useCallback is 'api'
+    }, [api]);
 
     useEffect(() => {
         fetchProviderBookings();
-    }, [fetchProviderBookings]); // 3. Use the function in the dependency array
+    }, [fetchProviderBookings]);
 
     const handleStatusChange = async (bookingId, newStatus) => {
         try {
             await api.patch(`/bookings/provider/bookings/${bookingId}/update/`, { status: newStatus });
-            // Refresh the list to show the updated status
             fetchProviderBookings();
         } catch (error) {
             console.error('Error updating booking status:', error);
@@ -48,7 +46,16 @@ function ProviderBookings() {
                         <ListItem key={booking.id} divider>
                             <ListItemText
                                 primary={`${booking.service.name} - Booked by ${booking.customer_username}`}
-                                secondary={`On: ${format(new Date(booking.booking_time), 'PPPP p')}`}
+                                secondary={
+                                    <>
+                                        <Typography component="span" display="block">
+                                            On: {format(new Date(booking.booking_time), 'PPPP p')}
+                                        </Typography>
+                                        <Typography component="span" display="block" sx={{ fontWeight: 'bold', mt: 1 }}>
+                                            Address: {booking.address || 'Not provided'}
+                                        </Typography>
+                                    </>
+                                }
                             />
                             <FormControl size="small">
                                 <Select
