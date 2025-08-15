@@ -131,3 +131,4 @@ REST_FRAMEWORK = {
 }
 
 # This is a comment to force a new deployment on Render
+# Forcing a final redeploy on Render to apply all migrations
