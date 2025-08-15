@@ -64,6 +64,11 @@ function Login() {
                         <Link to="/register">
                             {"Don't have an account? Sign Up"}
                         </Link>
+                        <Typography variant="body2" sx={{ mt: 1, textAlign: 'right' }}>
+                        <Link to="/forgot-password" style={{ textDecoration: 'none', color: '#1976d2' }}>
+                        Forgot password?
+                        </Link>
+                        </Typography>
                     </Box>
                 </Box>
             </Paper>
