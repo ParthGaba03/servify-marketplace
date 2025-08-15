@@ -123,3 +123,5 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+# This is a comment to force a new deployment on Render
