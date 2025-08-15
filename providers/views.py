@@ -1,30 +1,28 @@
 # providers/views.py
-from rest_framework import generics, viewsets, status
+from rest_framework import generics, viewsets, status, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db.models import Avg, Count
 from .models import ProviderProfile
 from .serializers import ProviderProfileSerializer
+from services.models import Service # Import the Service model to search on its fields
+
+# --- Your existing views remain the same ---
 
 class ProviderProfileCreateView(generics.CreateAPIView):
     queryset = ProviderProfile.objects.all()
     serializer_class = ProviderProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    # We are overriding the create method for a more direct save.
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        # This is the direct save method
         self.perform_create(serializer)
-
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-# --- The rest of your views remain the same ---
 
 class ProviderProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProviderProfileSerializer
@@ -32,6 +30,17 @@ class ProviderProfileDetailView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user.providerprofile
 
+# --- The updated ViewSet for search functionality ---
+
 class PublicProviderProfileViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ProviderProfile.objects.filter(is_approved=True)
+    queryset = ProviderProfile.objects.filter(is_approved=True).annotate(
+        average_rating=Avg('reviews__rating'),
+        review_count=Count('reviews')
+    )
     serializer_class = ProviderProfileSerializer
+    
+    # Enable search filtering
+    filter_backends = [filters.SearchFilter]
+    
+    # Define the fields to search on
+    search_fields = ['user__username', 'city', 'bio', 'services__name']

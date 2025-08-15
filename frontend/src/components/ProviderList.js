@@ -18,8 +18,8 @@ function ProviderList() {
             setLoading(true);
             try {
                 const searchTerm = searchParams.get('search');
-                // The fix is here: change the endpoint to 'list/'
-                let apiUrl = 'https://servify-backend.onrender.com/api/providers/list/';
+                // Correct endpoint for your backend's router
+                let apiUrl = 'https://servify-backend.onrender.com/api/providers/public-profiles/';
 
                 if (searchTerm) {
                     apiUrl += `?search=${searchTerm}`;
