@@ -51,21 +51,21 @@ function ProviderList() {
             <Typography variant="h4" gutterBottom component="h1">
                 Our Service Providers
             </Typography>
-
+            
             <Box sx={{ display: 'flex', height: 'calc(100vh - 150px)', gap: 2 }}>
-
+                
                 <Box sx={{ width: '50%', overflowY: 'auto', pr: 1 }}>
                     {providers.length > 0 ? (
                         providers.map(provider => (
                             <Card key={provider.id} sx={{ mb: 2 }}>
                                 <CardContent>
                                     <Typography variant="h5">{provider.username}</Typography>
-
-                                    {/* --- THIS IS THE NEW RATING SECTION --- */}
+                                    
+                                    {/* --- THIS IS THE FIXED RATING SECTION --- */}
                                     <Box sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
-                                        <Rating value={provider.average_rating || 0} readOnly precision={0.5} size="small" />
+                                        <Rating value={provider.avg_rating || 0} readOnly precision={0.5} size="small" />
                                         <Typography sx={{ ml: 1, fontSize: '0.9rem' }}>
-                                            ({provider.review_count || 0})
+                                            ({provider.num_reviews || 0})
                                         </Typography>
                                     </Box>
 
