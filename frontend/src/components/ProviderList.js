@@ -18,8 +18,8 @@ function ProviderList() {
             setLoading(true);
             try {
                 const searchTerm = searchParams.get('search');
-                // Using your live backend URL
-                let apiUrl = 'https://servify-backend.onrender.com/api/providers/public-profiles/';
+                // The fix is here: change the endpoint to 'list/'
+                let apiUrl = 'https://servify-backend.onrender.com/api/providers/list/';
 
                 if (searchTerm) {
                     apiUrl += `?search=${searchTerm}`;
@@ -51,16 +51,16 @@ function ProviderList() {
             <Typography variant="h4" gutterBottom component="h1">
                 Our Service Providers
             </Typography>
-            
+
             <Box sx={{ display: 'flex', height: 'calc(100vh - 150px)', gap: 2 }}>
-                
+
                 <Box sx={{ width: '50%', overflowY: 'auto', pr: 1 }}>
                     {providers.length > 0 ? (
                         providers.map(provider => (
                             <Card key={provider.id} sx={{ mb: 2 }}>
                                 <CardContent>
                                     <Typography variant="h5">{provider.username}</Typography>
-                                    
+
                                     {/* --- THIS IS THE NEW RATING SECTION --- */}
                                     <Box sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
                                         <Rating value={provider.average_rating || 0} readOnly precision={0.5} size="small" />
