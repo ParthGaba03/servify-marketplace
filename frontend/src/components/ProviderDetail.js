@@ -21,18 +21,15 @@ function ProviderDetail() {
     const { user } = useContext(AuthContext);
     const api = useAxios();
 
-    // The new line: This variable tells your app where to find the API.
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
     useEffect(() => {
         const fetchProviderData = async () => {
             setLoading(true);
             try {
-                // Now using the API base URL from the environment variable
-                const providerResponse = await axios.get(`${API_BASE_URL}/api/providers/public-profiles/${id}/`);
+                // The URL is now directly set to your live backend.
+                const providerResponse = await axios.get(`https://servify-backend.onrender.com/api/providers/public-profiles/${id}/`);
                 setProvider(providerResponse.data);
 
-                const reviewResponse = await axios.get(`${API_BASE_URL}/api/reviews/provider/${id}/`);
+                const reviewResponse = await axios.get(`https://servify-backend.onrender.com/api/reviews/provider/${id}/`);
                 setReviews(reviewResponse.data);
             } catch (error) {
                 console.error('Error fetching public data:', error);
@@ -41,7 +38,7 @@ function ProviderDetail() {
             }
         };
         fetchProviderData();
-    }, [id, API_BASE_URL]);
+    }, [id]);
 
     const handleBookingSubmit = async (e) => {
         e.preventDefault();
@@ -80,7 +77,6 @@ function ProviderDetail() {
 
     return (
         <Paper elevation={3} sx={{ p: { xs: 2, md: 4 } }}>
-            {/* --- THIS IS THE UPDATED HEADER SECTION --- */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2, mb: 2 }}>
                 <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>{provider.username}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -113,7 +109,6 @@ function ProviderDetail() {
                         <Typography variant="h6" gutterBottom>Book Service: {selectedService.name}</Typography>
                         <TextField label="Select Date and Time" type="datetime-local" value={bookingTime} onChange={(e) => setBookingTime(e.target.value)} InputLabelProps={{ shrink: true }} required fullWidth />
                         
-                        {/* --- THIS IS THE NEW ADDRESS FIELD --- */}
                         <TextField label="Your Address for the Service" multiline rows={3} value={address} onChange={(e) => setAddress(e.target.value)} required fullWidth sx={{ mt: 2 }} />
                         
                         <Box sx={{ mt: 2 }}>
