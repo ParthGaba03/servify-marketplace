@@ -14,21 +14,25 @@ function ProviderDetail() {
     const [loading, setLoading] = useState(true);
     const [selectedService, setSelectedService] = useState(null);
     const [bookingTime, setBookingTime] = useState('');
-    const [address, setAddress] = useState(''); // State for address is correct
+    const [address, setAddress] = useState('');
 
     const { id } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const api = useAxios();
 
+    // The new line: This variable tells your app where to find the API.
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
     useEffect(() => {
         const fetchProviderData = async () => {
             setLoading(true);
             try {
-                const providerResponse = await axios.get(`http://127.0.0.1:8000/api/providers/public-profiles/${id}/`);
+                // Now using the API base URL from the environment variable
+                const providerResponse = await axios.get(`${API_BASE_URL}/api/providers/public-profiles/${id}/`);
                 setProvider(providerResponse.data);
 
-                const reviewResponse = await axios.get(`http://127.0.0.1:8000/api/reviews/provider/${id}/`);
+                const reviewResponse = await axios.get(`${API_BASE_URL}/api/reviews/provider/${id}/`);
                 setReviews(reviewResponse.data);
             } catch (error) {
                 console.error('Error fetching public data:', error);
@@ -37,7 +41,7 @@ function ProviderDetail() {
             }
         };
         fetchProviderData();
-    }, [id]);
+    }, [id, API_BASE_URL]);
 
     const handleBookingSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +55,7 @@ function ProviderDetail() {
             const bookingResponse = await api.post('/bookings/create/', { 
                 service: selectedService.id, 
                 booking_time: new Date(bookingTime).toISOString(),
-                address: address // Sending address is correct
+                address: address
             });
 
             const bookingId = bookingResponse.data.id;
@@ -63,7 +67,7 @@ function ProviderDetail() {
             alert(`Booking confirmed for ${selectedService.name}!`);
             setSelectedService(null);
             setBookingTime('');
-            setAddress(''); // Clear address field after booking
+            setAddress('');
 
         } catch (error) {
             console.error('Error during booking process:', error.response?.data);
@@ -105,18 +109,18 @@ function ProviderDetail() {
             </List>
 
             {selectedService && (
-                 <Box component="form" onSubmit={handleBookingSubmit} sx={{ mt: 3, p: 2, border: '1px solid #ddd', borderRadius: 2 }}>
-                    <Typography variant="h6" gutterBottom>Book Service: {selectedService.name}</Typography>
-                    <TextField label="Select Date and Time" type="datetime-local" value={bookingTime} onChange={(e) => setBookingTime(e.target.value)} InputLabelProps={{ shrink: true }} required fullWidth />
-                    
-                    {/* --- THIS IS THE NEW ADDRESS FIELD --- */}
-                    <TextField label="Your Address for the Service" multiline rows={3} value={address} onChange={(e) => setAddress(e.target.value)} required fullWidth sx={{ mt: 2 }} />
-                    
-                    <Box sx={{ mt: 2 }}>
-                        <Button type="submit" variant="contained" sx={{ mr: 1 }}>Confirm Booking</Button>
-                        <Button variant="outlined" onClick={() => setSelectedService(null)}>Cancel</Button>
+                    <Box component="form" onSubmit={handleBookingSubmit} sx={{ mt: 3, p: 2, border: '1px solid #ddd', borderRadius: 2 }}>
+                        <Typography variant="h6" gutterBottom>Book Service: {selectedService.name}</Typography>
+                        <TextField label="Select Date and Time" type="datetime-local" value={bookingTime} onChange={(e) => setBookingTime(e.target.value)} InputLabelProps={{ shrink: true }} required fullWidth />
+                        
+                        {/* --- THIS IS THE NEW ADDRESS FIELD --- */}
+                        <TextField label="Your Address for the Service" multiline rows={3} value={address} onChange={(e) => setAddress(e.target.value)} required fullWidth sx={{ mt: 2 }} />
+                        
+                        <Box sx={{ mt: 2 }}>
+                            <Button type="submit" variant="contained" sx={{ mr: 1 }}>Confirm Booking</Button>
+                            <Button variant="outlined" onClick={() => setSelectedService(null)}>Cancel</Button>
+                        </Box>
                     </Box>
-                </Box>
             )}
 
             <Divider sx={{ my: 3 }} />
