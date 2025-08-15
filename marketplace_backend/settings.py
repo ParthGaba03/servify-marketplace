@@ -79,11 +79,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'servify_main_db',
         'USER': 'market_user',
-        'PASSWORD': 'testing123', # Yahan apna local password daalein
+        'PASSWORD': 'your_local_db_password', # Make sure this is your correct local password
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+# If the DATABASE_URL environment variable exists (on Render),
+# override the default settings with the live database URL.
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
