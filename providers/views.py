@@ -2,7 +2,7 @@
 from rest_framework import generics, viewsets, status, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count # <-- Added Avg and Count here
 from .models import ProviderProfile
 from .serializers import ProviderProfileSerializer
 from services.models import Service # Import the Service model to search on its fields
@@ -34,7 +34,8 @@ class ProviderProfileDetailView(generics.RetrieveUpdateAPIView):
 
 class PublicProviderProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ProviderProfile.objects.filter(is_approved=True).annotate(
-        average_rating=Avg('reviews__rating'),
+        # Renamed the annotation to avoid conflict
+        avg_rating=Avg('reviews__rating'),
         review_count=Count('reviews')
     )
     serializer_class = ProviderProfileSerializer
