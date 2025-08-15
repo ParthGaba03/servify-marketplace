@@ -9,11 +9,11 @@ class BookingSerializer(serializers.ModelSerializer):
     # Add this line to include the customer's username
     customer_username = serializers.CharField(source='customer.username', read_only=True)
     has_review = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Booking
-        # Add 'customer_username' to the fields list
-        fields = ['id', 'customer', 'customer_username', 'service', 'booking_time', 'status', 'created_at', 'has_review']
+        # Add 'customer_username' and 'address' to the fields list
+        fields = ['id', 'customer', 'customer_username', 'service', 'booking_time', 'status', 'created_at', 'has_review', 'address']
 
     def get_has_review(self, obj):
         return hasattr(obj, 'review')
