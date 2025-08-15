@@ -19,32 +19,34 @@ import ProviderList from './components/ProviderList';
 import ProviderDetail from './components/ProviderDetail';
 import BookingTest from './components/BookingTest';
 import ProviderBookings from './components/ProviderBookings';
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
-  return (
-    <Router>
-      <AuthProvider>
-        <Navbar />
-        <Container sx={{ mt: 4 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/" element={<h2>Welcome to Project Servify!</h2>} />
-            <Route path="/providers" element={<ProviderList />} />
-            <Route path="/providers/:id" element={<ProviderDetail />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/my-profile" element={<MyProfile />} />
-            <Route path="/create-profile" element={<CreateProfile />} />
-            <Route path="/manage-services" element={<ServiceManagement />} />
-            <Route path="/my-bookings" element={<MyBookings />} /> 
-            <Route path="/booking-test" element={<BookingTest />} />
-            <Route path="/provider/bookings" element={<ProviderBookings />} />
-          </Routes>
-        </Container>
-      </AuthProvider>
-    </Router>
-  );
+    return (
+        <Router>
+            <AuthProvider>
+                <Navbar />
+                <Container sx={{ mt: 4 }}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<h2>Welcome to Project Servify!</h2>} />
+                        <Route path="/providers" element={<ProviderList />} />
+                        <Route path="/providers/:id" element={<ProviderDetail />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/my-profile" element={<MyProfile />} />
+                        <Route path="/create-profile" element={<CreateProfile />} />
+                        <Route path="/manage-services" element={<ServiceManagement />} />
+                        <Route path="/my-bookings" element={<MyBookings />} /> 
+                        <Route path="/booking-test" element={<BookingTest />} />
+                        <Route path="/provider/bookings" element={<ProviderBookings />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                    </Routes>
+                </Container>
+            </AuthProvider>
+        </Router>
+    );
 }
 
 export default App;
